@@ -1,0 +1,64 @@
+id,value
+Airport,
+Airport.South America,
+Airport.South America.Brazil,213
+Airport.South America.Argentina,103
+Airport.South America.Mexico,94
+Airport.South America.Colombia,72
+Airport.South America.Venezuela,58
+Airport.South America.Algeria,44
+Airport.South America.Peru,43
+Airport.South America.Chile,38
+Airport.South America.Ecuador,38
+Airport.South America.Bahamas,37
+Airport.Oceania,
+Airport.Oceania.Australia,263
+Airport.Oceania.Papua New Guinea,57
+Airport.Oceania.New Zealand,56
+Airport.Oceania.Marshall Islands,32
+Airport.North America
+Airport.North America.United States,566
+Airport.North America.Canada,435
+Airport.North America.Cuba,30
+Airport.Europe,
+Airport.Europe.Germany,321
+Airport.Europe.Russia,249
+Airport.Europe.France,233
+Airport.Europe.United Kingdom,210
+Airport.Europe.Italy,92
+Airport.Europe.Sweden,86
+Airport.Europe.Spain,84
+Airport.Europe.Norway,69
+Airport.Europe.Greece,60
+Airport.Europe.Switzerland,53
+Airport.Europe.Finland,51
+Airport.Europe.Netherlands,42
+Airport.Europe.Portugal,39
+Airport.Europe.Belgium,34
+Airport.Europe.Poland,34
+Airport.Europe.Ukraine,33
+Airport.Asia,
+Airport.Asia.China,219
+Airport.Asia.India,140
+Airport.Asia.Japan,131
+Airport.Asia.Indonesia,114
+Airport.Asia.Iran,81
+Airport.Asia.Turkey,77
+Airport.Asia.Philippines,64
+Airport.Asia.Thailand,58
+Airport.Asia.Malaysia,47
+Airport.Asia.Pakistan,46
+Airport.Asia.Burma,43
+Airport.Asia.Maldives,42
+Airport.Asia.Saudi Arabia,42
+Airport.Asia.Nepal,36
+Airport.Asia.Taiwan,32
+Airport.Asia.South Korea,31
+Airport.Asia.Vietnam,30
+Airport.Africa,
+Airport.Africa.South Africa,103
+Airport.Africa.Kenya,55
+Airport.Africa.Madagascar,45
+Airport.Africa.Congo (Kinshasa),36
+Airport.Africa.French Polynesia,36
+Airport.Africa.Ethiopia,32

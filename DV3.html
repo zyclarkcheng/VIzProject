@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.point {
+  fill: steelblue;
+  stroke: #000;
+}
+
+</style>
+<head>
+  <title>Global Airport Analysis </title>
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="row">
+      <div class="navbar">
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+          <span class="sr-only">Toggle navigation</span>
+           <span class="icon-bar"></span> 
+           <span class="icon-bar"></span> 
+           <span class="icon-bar"></span>
+           </button>
+          <a class="navbar-brand" href="DV3.html">Data Analysis</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="DV3.html">Airport-GDP</a></li>
+            <li><a href="DA2.html">Airport/People-GDP per capita</a></li>
+            <li><a href="DA3.html">Airport/Surface Area-GDP per capita</a></li>
+            <li><a href="home.html">Go Back</a></li>
+          </ul>                         
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.navbar -->
+    </div>
+  </header>        
+<header>
+  
+   <div>X:Airport Number</div> 
+   <div>Y:GDP(billion $)</div>
+
+</header>>
+
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 60},
+    width = 1200 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("data/DV3.csv", function(error, data) {
+  if (error) throw error;
+
+  // Coerce the data to numbers.
+  data.forEach(function(d) {
+    d.x = +d.x;
+    d.y = +d.y;
+  });
+
+  // Compute the scales’ domains.
+  x.domain(d3.extent(data, function(d) { return d.x; })).nice();
+  y.domain(d3.extent(data, function(d) { return d.y; })).nice();
+
+  // Add the x-axis.
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.svg.axis().scale(x).orient("bottom"));
+
+  // Add the y-axis.
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(d3.svg.axis().scale(y).orient("left"));
+
+  // Add the points!
+  svg.selectAll(".point")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "point")
+      .attr("r", 4.5)
+      .attr("cx", function(d) { return x(d.x); })
+      .attr("cy", function(d) { return y(d.y); });
+});
+
+</script>

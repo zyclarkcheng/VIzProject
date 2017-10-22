@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.node--hover circle {
+  stroke: #000;
+  stroke-width: 1.2px;
+}
+
+</style>
+
+<head>
+  <title>Global Airport Analysis </title>
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="row">
+      <div class="navbar">
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" data-target=".navbar-collapse" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+          <a class="navbar-brand" href="home.html">Airport Analysis</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+           <li><a href="DV2.html">Bubble Disgram</a></li>
+            <li><a href="DV1.html">Top 20 Countries</a></li>
+            <li><a href="DV3.html">Data Analysis</a></li>
+          </ul>                         
+        </div>
+      </div>
+    </div>
+  </header>        
+
+<svg width="960" height="960"><g transform="translate(1,1)"></g></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+ var svg = d3.select("svg"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height"),
+    centered;
+
+var format = d3.format(",d");
+
+var color = d3.scaleSequential(d3.interpolateMagma)
+    .domain([-4, 4]);
+
+var stratify = d3.stratify()
+    .parentId(function(d) { return d.id.substring(0, d.id.lastIndexOf(".")); });
+
+var pack = d3.pack()
+    .size([width - 2, height - 2])
+    .padding(3);
+
+d3.csv("data/DV2.csv", function(error, data) {
+  if (error) throw error;
+
+  var root = stratify(data)
+      .sum(function(d) { return d.value; })
+      .sort(function(a, b) { return b.value - a.value; });
+
+  pack(root);
+
+  var node = svg.select("g")
+    .selectAll("g")
+    .data(root.descendants())
+    .enter().append("g")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+      .attr("class", function(d) { return "node" + (!d.children ? " node--leaf" : d.depth ? "" : " node--root"); })
+      .each(function(d) { d.node = this; })
+      .on("mouseover", hovered(true))
+      .on("mouseout", hovered(false));
+
+  node.append("circle")
+      .attr("id", function(d) { return "node-" + d.id; })
+      .attr("r", function(d) { return d.r; })
+      .style("fill", function(d) { return color(d.depth+1); });
+
+  var leaf = node.filter(function(d) { return !d.children; });
+
+  leaf.append("clipPath")
+      .attr("id", function(d) { return "clip-" + d.id; })
+    .append("use")
+      .attr("xlink:href", function(d) { return "#node-" + d.id + ""; });
+
+  leaf.append("text")
+      .attr("clip-path", function(d) { return "url(#clip-" + d.id + ")"; })
+    .selectAll("tspan")
+    .data(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1).split(/(?=[A-Z][^A-Z])/g); })
+    .enter().append("tspan")
+      .attr("x", 0)
+      .attr("y", function(d, i, nodes) { return 13 + (i - nodes.length / 2 - 0.5) * 10; })
+      .text(function(d) { return d; });
+
+  node.append("title")
+      .text(function(d) { return d.id + "\n" + format(d.value); });
+});
+
+function hovered(hover) {
+  return function(d) {
+    d3.selectAll(d.ancestors().map(function(d) { return d.node; })).classed("node--hover", hover);
+  };
+}
+
+</script>
+</body>
