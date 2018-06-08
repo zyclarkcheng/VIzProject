@@ -6,5 +6,5 @@ after installation of node.js, we should install httpserver by
 ***npm install -g httpserver***   
 launch httpserver in you computer   
 ***httpserver***   
-httpserver makes  us able to use local files in webpage.
+httpserver makes  us able to use local files in webpage, dynamic visualization is displayed.
   
